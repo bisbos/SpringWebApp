@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: urlservice
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://${DOCKER_HOST:localhost}:8888}
+
+logging:
+  file: /var/log/urlservice.log
+  level:
+    org.springframework.security: DEBUG
+
+
+---
+spring:
+  profiles: cloud
+  cloud:
+    config:
+      failFast: true
+      retry:
+        initialInterval: 1000
+        multiplier:      1.1
+        maxAttempts:     60
+        maxInterval:     180000

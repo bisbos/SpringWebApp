@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Quicken URL Service</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <div th:if="${not #lists.isEmpty(urls)}">
+        <h2>URL List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>URL Name</th>
+                <th>Web Link</th>
+                <th>Platform</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="url : ${urls}">
+                <td th:text="${url.urlname}">URL Name</td>
+                <td th:text="${url.urllink}">Web Link</td>
+                <td th:text="${url.platform}">Platform</td>
+                <td><a th:href="${'/urls/geturl/' + url.urlid}">Edit</a></td>
+                <td><a th:href="${'/urls/deleteurl/' + url.urlid}">Delete</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

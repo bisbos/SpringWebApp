@@ -1,0 +1,54 @@
+server:
+    port: 10109
+
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    properties:
+      hibernate:
+        implicit_naming_strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+        physical_naming_strategy: com.quicken.common.core.entities.utils.HibernateImprovedNamingStrategy
+  sleuth:
+   keys:
+     http:
+       headers: Content-Type
+
+---
+spring:
+  profiles: dev,test
+  cloud:
+    config:
+      enabled: false
+
+h2.web.enabled: true
+h2.tcp.enabled: true
+
+eureka:
+  client:
+    enabled: false
+
+quicken:
+  snowflake:
+    enabled: false
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+hibernate:
+  show_sql:   true
+  format_sql: true
+  use_sql_comments: true
+
+---
+spring:
+  profiles: mysql
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${DOCKER_HOST:localhost}:3306/urls
+    username: root
+    password:
+  jpa:
+    database: MYSQL
+
